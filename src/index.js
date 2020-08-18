@@ -10,7 +10,13 @@ app.use(morgan('dev'));
 const projects = [];
 
 app.get('/projects', (request, response) => {
-  return response.json(projects);
+  const { title } = request.query;
+
+  const results = title
+    ? projects.filter((project) => project.title.toLowerCase().includes(title.toLowerCase()))
+    : projects;
+
+  return response.json(results);
 });
 
 app.post('/projects', (request, response) => {
