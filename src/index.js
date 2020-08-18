@@ -1,6 +1,9 @@
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
+
+app.use(morgan('dev'));
 
 app.get('/projects', (request, response) => response.json([
   'Projeto 1',
