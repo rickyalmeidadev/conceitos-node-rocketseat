@@ -24,7 +24,7 @@ function validateProjectId(request, response, next) {
 
   if (!isUuid(id)) {
     return response.status(400).json({
-      error: 'Invalid project ID.',
+      message: 'Projeto não encontrado.',
     });
   }
 
@@ -40,6 +40,12 @@ app.get('/projects', (request, response) => {
   const results = title
     ? projects.filter((project) => project.title.toLowerCase().includes(title.toLowerCase()))
     : projects;
+
+  if (!projects.length) {
+    return response.status(400).json({
+      message: 'Nenhum projeto encontrado.',
+    });
+  }
 
   return response.json(results);
 });
@@ -62,7 +68,7 @@ app.put('/projects/:id', (request, response) => {
 
   if (projectIndex < 0) {
     return response.status(400).json({
-      error: 'Project not found.',
+      message: 'Projeto não encontrado.',
     });
   }
 
@@ -80,7 +86,7 @@ app.delete('/projects/:id', (request, response) => {
 
   if (projectIndex < 0) {
     return response.status(400).json({
-      error: 'Project not found.',
+      message: 'Projeto não encontrado.',
     });
   }
 
